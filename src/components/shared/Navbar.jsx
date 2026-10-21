@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router";
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -47,9 +48,9 @@ function Navbar() {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-5">
-          <button className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
+          <Link to={"auth/login"} className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
             Login
-          </button>
+          </Link>
 
           <button className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg shadow-sm transition-all cursor-pointer">
             Logout
@@ -95,9 +96,9 @@ function Navbar() {
           </nav>
 
           <div className="pt-4 border-t border-gray-100 flex flex-col space-y-3">
-            <button className="w-full text-center py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
+            <Link to={"/auth/login"} className="w-full text-center py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Login
-            </button>
+            </Link>
             <button className="w-full text-center py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all cursor-pointer">
               Logout
             </button>
