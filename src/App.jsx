@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import Index from "./pages/Index";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="register" element={<Register />} />
       </Route>
       <Route path="/" element={<Index />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
