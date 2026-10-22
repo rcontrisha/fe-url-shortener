@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 
-import userReducer from "./slice/userSlice"
+import userReducer from "./slice/userSlice";
 
 const storage = {
   getItem: (key) => {
@@ -16,14 +16,16 @@ const storage = {
 };
 
 const persistUserConfig = {
-  key: "user",
+  key: "auth",
   storage,
-  whitelist: ["user"],
+  whitelist: ["auth"],
 };
 
 const store = configureStore({
-  reducer: persistReducer(persistUserConfig, userReducer)
-})
+  reducer: { 
+    userState: persistReducer(persistUserConfig, userReducer)
+  },
+});
 
 export const persistor = persistStore(store);
 

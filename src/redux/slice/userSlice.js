@@ -102,8 +102,8 @@ const userSlice = createSlice({
         state.isPending = false;
         state.isRejected = false;
         ((state.isFulfilled = true),
-          (state.auth.token = payload.result.token),
-          (state.auth.user = payload.result.user));
+          (state.auth.token = payload.results.token),
+          (state.auth.user = payload.results.user));
       },
       rejected: (state, { payload }) => {
         ((state.isPending = false),
