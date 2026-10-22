@@ -115,10 +115,10 @@ function Navbar() {
         {/* Mobile Hamburger Toggle */}
         <div className="flex md:hidden items-center space-x-3">
           {isAuthenticated && (
-            <button className="flex items-center space-x-1 bg-primary text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-sm">
+            <Link to={"/link/create"} className="flex items-center space-x-1 bg-primary text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-sm">
               <FaPlus className="w-3 h-3" />
               <span>New</span>
-            </button>
+            </Link>
           )}
 
           <button
