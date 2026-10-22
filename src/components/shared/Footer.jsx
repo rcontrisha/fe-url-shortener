@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="w-full bg-[#F8F9FA] border-t border-gray-100 py-8 px-8 font-sans">
+    <footer className="w-full bg-[#F8F9FA] border-t border-gray-100 py-8 px-8 font-inter">
       <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-bold tracking-widest text-slate-500 uppercase">
         <div>© 2026 SHORTLINK. THE DIGITAL ARCHITECT.</div>
 

@@ -1,30 +1,50 @@
 import { useState } from "react";
-import { FaLink, FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router";
+import { FaLink, FaArrowRight, FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
+import { registerUser } from "../../redux/slice/userSlice";
 import Footer from "../../components/shared/Footer";
-import { Link } from "react-router";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isPending, error } = useSelector((state) => state.userState);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const passwordValue = watch("password");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const resultAction = await dispatch(
+      registerUser({
+        email: data.email,
+        password: data.password,
+      })
+    );
+
+    if (registerUser.fulfilled.match(resultAction)) {
+      navigate("/auth/login");
+    }
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F8F9FA] flex flex-col font-sans text-gray-900 overflow-y-auto lg:overflow-hidden">
+    <div className="min-h-screen w-full bg-[#F8F9FA] flex flex-col font-inter text-gray-900 overflow-y-auto lg:overflow-hidden">
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
         <div className="w-full max-w-110 flex flex-col items-center">
           
@@ -42,21 +62,33 @@ function Register() {
           </div>
 
           <div className="w-full bg-white p-8 sm:p-9 rounded-2xl shadow-xl shadow-gray-200/40 border border-gray-100/80">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              
+            
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-xs font-semibold">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5">
                   Email Address
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   placeholder="name@company.com"
-                  className="w-full px-3.5 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all"
-                  required
+                  {...register("email", {
+                    required: "Email address is required",
+                  })}
+                  className={`w-full px-3.5 py-2.5 bg-white border ${
+                    errors.email ? "border-red-500" : "border-gray-300"
+                  } rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all`}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs font-medium mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -66,12 +98,17 @@ function Register() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full pl-3.5 pr-10 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all"
-                    required
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                    })}
+                    className={`w-full pl-3.5 pr-10 py-2.5 bg-white border ${
+                      errors.password ? "border-red-500" : "border-gray-300"
+                    } rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all`}
                   />
                   <button
                     type="button"
@@ -85,9 +122,15 @@ function Register() {
                     )}
                   </button>
                 </div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-1.5">
-                  MINIMUM 6 CHARACTERS
-                </p>
+                {errors.password ? (
+                  <p className="text-red-500 text-xs font-medium mt-1">
+                    {errors.password.message}
+                  </p>
+                ) : (
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-1.5">
+                    MINIMUM 6 CHARACTERS
+                  </p>
+                )}
               </div>
 
               <div>
@@ -97,12 +140,15 @@ function Register() {
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full pl-3.5 pr-10 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all"
-                    required
+                    {...register("confirmPassword", {
+                      required: "Please confirm your password",
+                      validate: (value) =>
+                        value === passwordValue || "Passwords do not match",
+                    })}
+                    className={`w-full pl-3.5 pr-10 py-2.5 bg-white border ${
+                      errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                    } rounded-lg text-sm text-gray-900 placeholder-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all`}
                   />
                   <button
                     type="button"
@@ -116,14 +162,29 @@ function Register() {
                     )}
                   </button>
                 </div>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs font-medium mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
 
               <button
                 type="submit"
-                className="w-full mt-3 py-3 px-4 bg-primary hover:bg-primary-hover text-white font-semibold text-sm rounded-xl shadow-md shadow-blue-500/20 flex items-center justify-center space-x-2 transition-all duration-200 cursor-pointer"
+                disabled={isPending}
+                className="w-full mt-3 py-3 px-4 bg-primary hover:bg-primary-hover disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl shadow-md shadow-blue-500/20 flex items-center justify-center space-x-2 transition-all duration-200 cursor-pointer"
               >
-                <span>Sign Up</span>
-                <FaArrowRight className="w-3.5 h-3.5" />
+                {isPending ? (
+                  <>
+                    <FaSpinner className="w-4 h-4 animate-spin" />
+                    <span>Creating account...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Sign Up</span>
+                    <FaArrowRight className="w-3.5 h-3.5" />
+                  </>
+                )}
               </button>
             </form>
 

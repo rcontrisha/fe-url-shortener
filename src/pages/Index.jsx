@@ -50,7 +50,7 @@ function Index() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-white text-gray-900 py-12 md:py-20 px-4 sm:px-6 md:px-8 font-sans">
+      <section className="bg-white text-gray-900 py-12 md:py-20 px-4 sm:px-6 md:px-8 font-inter">
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
             <span className="text-gray-900">Shorten URLs. </span>
@@ -101,7 +101,7 @@ function Index() {
       </section>
 
       {/* Architectural Features Section */}
-      <section className="bg-[#F8F9FA] py-12 md:py-24 px-6 font-sans">
+      <section className="bg-[#F8F9FA] py-12 md:py-24 px-6 font-inter">
         <div className="mx-auto">
           <div className="mb-12">
             <p className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">
@@ -144,7 +144,7 @@ function Index() {
       </section>
 
       {/* Data Driven Insights Section */}
-      <section className="bg-white py-12 md:py-24 px-6 font-sans overflow-hidden">
+      <section className="bg-white py-12 md:py-24 px-6 font-inter overflow-hidden">
         <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="relative group">
             <div className="absolute -inset-1 bg-linear-to-r from-blue-100 to-indigo-100 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />

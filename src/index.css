@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter';
+  --font-inter: 'Inter';
   --color-primary: #004AC6;
   --color-primary-hover: #003BA0;
 }
