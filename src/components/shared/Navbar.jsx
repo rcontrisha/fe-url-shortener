@@ -68,10 +68,10 @@ function Navbar() {
           {isAuthenticated ? (
             /* Condition 1: Authenticated State */
             <>
-              <button className="flex items-center space-x-2 bg-primary hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-all cursor-pointer">
+              <Link to={"/link/create"} className="flex items-center space-x-2 bg-primary hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-all cursor-pointer">
                 <FaPlus className="w-3 h-3" />
                 <span>Create New Link</span>
-              </button>
+              </Link>
 
               {/* User Avatar */}
               <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-gray-200 cursor-pointer">

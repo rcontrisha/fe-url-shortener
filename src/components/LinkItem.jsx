@@ -8,7 +8,7 @@ function LinkItem({ shortUrl, originalUrl, date, clicks, onCopy, onDelete }) {
         <div className="flex items-center space-x-2">
           <FaLink className="w-3.5 h-3.5 text-primary shrink-0" />
           <Link
-            to={`https://${shortUrl}`}
+            to={`${shortUrl}`}
             target="_blank"
             rel="noreferrer"
             className="text-sm font-bold text-primary hover:underline truncate"

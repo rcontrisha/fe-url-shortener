@@ -4,6 +4,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import CreateLink from "./pages/CreateLink";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       </Route>
       <Route path="/" element={<Index />} />
       <Route path="/dashboard" element={<Dashboard />} />
-
+      <Route path="/link/create" element={<CreateLink />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
